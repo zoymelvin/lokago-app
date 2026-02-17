@@ -1,17 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../core/constants/api_constants.dart';
+import '../constants/api_constants.dart';
 
 class DioClient {
-  final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: ApiConstants.baseUrl,
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 15),
-    ),
-  );
+  static final DioClient _instance = DioClient._internal();
+  late Dio _dio;
 
-  DioClient() {
+  factory DioClient() => _instance;
+
+  DioClient._internal() {
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 15),
+      ),
+    );
+
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         options.headers['apiKey'] = ApiConstants.apiKey; 

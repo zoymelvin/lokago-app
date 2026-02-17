@@ -1,28 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lokago/core/network/dio_client.dart';
+import 'package:lokago/presentation/pages/login_page.dart';
 import 'data/repositories/auth_repository.dart';
+import 'data/repositories/home_repository.dart';
 import 'presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'presentation/pages/login_page.dart';
+import 'presentation/blocs/home_bloc/home_bloc.dart';
+import 'presentation/blocs/home_bloc/home_event.dart';
+
 void main() {
-  runApp(const MyApp());
+  final dioClient = DioClient();
+  final dio = dioClient.dio;
+
+  runApp(MyApp(dio: dio));
 }
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final dynamic dio;
+  
+  const MyApp({super.key, required this.dio});
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => AuthRepository(),
-      child: BlocProvider(
-        create: (context) => AuthBloc(context.read<AuthRepository>()),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => AuthRepository(dio)),
+        RepositoryProvider(create: (context) => HomeRepository(dio)),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(context.read<AuthRepository>()),
+          ),
+          BlocProvider(
+            create: (context) => HomeBloc(context.read<HomeRepository>())..add(GetHomeData()),
+          ),
+        ],
         child: MaterialApp(
           title: 'LokaGo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+            colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0052CC)),
             useMaterial3: true,
           ),
-          home: LoginPage(),
+          home: LoginPage(), 
         ),
       ),
     );
