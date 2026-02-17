@@ -13,4 +13,7 @@ class ApiConstants {
   static const String promos = '/api/v1/promos';
   static const String carts = '/api/v1/carts';
   static const String createTransaction = '/api/v1/create-transaction';
+  static const String updateProfile = '/api/v1/update-profile';
+  static const String updatePassword = '/api/v1/update-password';
+  static const String uploadImage = '/api/v1/upload-image';
 }

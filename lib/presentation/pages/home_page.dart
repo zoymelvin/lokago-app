@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../blocs/home_bloc/home_bloc.dart';
 import '../blocs/home_bloc/home_state.dart';
+import '../blocs/user_bloc/user_bloc.dart'; 
+import '../blocs/user_bloc/user_state.dart'; 
 import '../widgets/home/home_search_bar.dart';
 import '../widgets/home/home_category_section.dart';
 import '../widgets/home/activity_grid.dart';
@@ -71,11 +73,12 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildHeader(),
+                    
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: HomeSearchBar(),
                     ),
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 15), 
                     const HomeQuickFilters(),
                     const SizedBox(height: 15),
 
@@ -90,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 20),
                     _buildTitle("Rekomendasi Liburan"),
                     ActivityGrid(activities: state.activities),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 100), 
                   ],
                 ),
               ),
@@ -120,10 +123,21 @@ class _HomePageState extends State<HomePage> {
             children: [
               _buildNotificationIcon(),
               const SizedBox(width: 12),
-              const CircleAvatar(
-                radius: 20,
-                backgroundColor: Color(0xFF0052CC),
-                child: Icon(Icons.person, color: Colors.white, size: 20),
+              BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  String imageUrl = "https://i.pravatar.cc/150";
+                  
+                  if (state is UserSuccess) {
+                    imageUrl = state.user.profilePictureUrl ?? imageUrl;
+                  }
+
+                  return CircleAvatar(
+                    radius: 20,
+                    backgroundColor: const Color(0xFF0052CC),
+                    backgroundImage: NetworkImage(imageUrl),
+                    onBackgroundImageError: (_, __) => const Icon(Icons.person, color: Colors.white),
+                  );
+                },
               ),
             ],
           ),
@@ -138,7 +152,7 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
       ),
       child: const Icon(Icons.notifications_none_rounded, color: Colors.black87, size: 24),
     );

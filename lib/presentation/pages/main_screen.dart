@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lokago/presentation/pages/account_page.dart';
 import 'home_page.dart';
 import '../widgets/navigation/custom_bottom_bar.dart';
 
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
     const HomePage(),
     const Center(child: Text("Pesanan")),
     const Center(child: Text("Favorit")),
-    const Center(child: Text("Akun")),
+    const AccountPage(),
   ];
 
   @override

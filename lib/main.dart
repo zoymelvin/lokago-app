@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lokago/core/network/dio_client.dart';
-import 'package:lokago/presentation/pages/login_page.dart';
+import 'package:lokago/presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:lokago/presentation/blocs/user_bloc/user_event.dart';
+import 'package:lokago/presentation/pages/main_screen.dart';
 import 'data/repositories/auth_repository.dart';
 import 'data/repositories/home_repository.dart';
 import 'presentation/blocs/auth_bloc/auth_bloc.dart';
@@ -35,6 +37,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => HomeBloc(context.read<HomeRepository>())..add(GetHomeData()),
           ),
+          BlocProvider(
+            create: (context) => UserBloc(context.read<AuthRepository>())..add(GetUserProfile()),
+),
         ],
         child: MaterialApp(
           title: 'LokaGo',
@@ -43,7 +48,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0052CC)),
             useMaterial3: true,
           ),
-          home: LoginPage(), 
+          home: MainScreen(), 
         ),
       ),
     );
