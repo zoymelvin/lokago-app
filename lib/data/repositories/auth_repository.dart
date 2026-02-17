@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-import '../api/dio_client.dart';
 import '../../core/constants/api_constants.dart';
 
 class AuthRepository {
-  final Dio _dio = DioClient().dio;
+  final Dio _dio;
+  AuthRepository(this._dio);
+
   Future<Response> register({
     required String email,
     required String password,

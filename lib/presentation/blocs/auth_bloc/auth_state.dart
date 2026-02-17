@@ -1,15 +1,15 @@
-abstract class AuthState {}
+sealed class AuthState {}
 
-class AuthInitial extends AuthState {}
+final class AuthInitial extends AuthState {}
 
-class AuthLoading extends AuthState {}
+final class AuthLoading extends AuthState {}
 
-class AuthSuccess extends AuthState {
+final class AuthSuccess extends AuthState {
   final String message;
   AuthSuccess(this.message);
 }
 
-class AuthError extends AuthState {
+final class AuthError extends AuthState {
   final String errorMessage;
   AuthError(this.errorMessage);
 }
