@@ -52,7 +52,7 @@ class CustomBottomBar extends StatelessWidget {
             isSelected: selectedIndex == 2,
             outlineIcon: Icons.bookmark_border_outlined,
             filledIcon: Icons.bookmark_rounded,
-            label: "Favorit",
+            label: "Disimpan",
             onTap: () => onItemSelected(2),
           ),
           NavItem(
