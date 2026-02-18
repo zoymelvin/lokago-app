@@ -2,16 +2,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../blocs/home_bloc/home_bloc.dart';
-import '../blocs/home_bloc/home_state.dart';
-import '../blocs/user_bloc/user_bloc.dart'; 
-import '../blocs/user_bloc/user_state.dart'; 
-import '../widgets/home/home_search_bar.dart';
-import '../widgets/home/home_category_section.dart';
-import '../widgets/home/activity_grid.dart';
-import '../widgets/home/home_featured_banner.dart';
-import '../widgets/home/home_quick_filters.dart';
-import '../../data/models/activity_model.dart';
+import '../../blocs/home_bloc/home_bloc.dart';
+import '../../blocs/home_bloc/home_state.dart';
+import '../../blocs/user_bloc/user_bloc.dart'; 
+import '../../blocs/user_bloc/user_state.dart'; 
+import '../../widgets/home/home_search_bar.dart';
+import '../../widgets/home/home_category_section.dart';
+import '../../widgets/home/activity_grid.dart';
+import '../../widgets/home/home_featured_banner.dart';
+import '../../widgets/home/home_quick_filters.dart';
+import '../../../data/models/activity_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

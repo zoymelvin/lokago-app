@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lokago/presentation/pages/account_page.dart';
-import 'home_page.dart';
+import 'package:lokago/presentation/pages/profile/account_page.dart';
+import 'home/home_page.dart';
 import '../widgets/navigation/custom_bottom_bar.dart';
 
 class MainScreen extends StatefulWidget {

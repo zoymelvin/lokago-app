@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../blocs/user_bloc/user_bloc.dart';
-import '../blocs/user_bloc/user_event.dart';
-import '../blocs/user_bloc/user_state.dart';
-import '../widgets/custom_text_field.dart';
+import '../../blocs/user_bloc/user_bloc.dart';
+import '../../blocs/user_bloc/user_event.dart';
+import '../../blocs/user_bloc/user_state.dart';
+import '../../widgets/custom_text_field.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});

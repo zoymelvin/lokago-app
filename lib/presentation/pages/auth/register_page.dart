@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lokago/presentation/widgets/custom_button.dart';
 import 'package:lokago/presentation/widgets/custom_text_field.dart';
-import '../blocs/auth_bloc/auth_bloc.dart';
-import '../blocs/auth_bloc/auth_event.dart';
-import '../blocs/auth_bloc/auth_state.dart';
+import '../../blocs/auth_bloc/auth_bloc.dart';
+import '../../blocs/auth_bloc/auth_event.dart';
+import '../../blocs/auth_bloc/auth_state.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
