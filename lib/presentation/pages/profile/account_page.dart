@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lokago/presentation/pages/change_password_page.dart';
-import 'package:lokago/presentation/pages/edit_profile_page.dart';
+import 'package:lokago/presentation/pages/profile/change_password_page.dart';
+import 'package:lokago/presentation/pages/profile/edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../blocs/user_bloc/user_bloc.dart';
-import '../blocs/user_bloc/user_state.dart';
-import '../widgets/account/account_menu_card.dart';
-import '../widgets/account/account_menu_item.dart';
-import 'login_page.dart';
+import '../../blocs/user_bloc/user_bloc.dart';
+import '../../blocs/user_bloc/user_state.dart';
+import '../../widgets/account/account_menu_card.dart';
+import '../../widgets/account/account_menu_item.dart';
+import '../auth/login_page.dart';
 import 'help_center_page.dart';
 import 'privacy_policy_page.dart';
 

@@ -88,7 +88,7 @@ class ActivityCardHorizontal extends StatelessWidget {
                       const Icon(Icons.person, size: 12, color: Colors.grey),
                       const SizedBox(width: 2),
                       Text(
-                        "(${activity.total_reviews})",
+                        "(${activity.totalReviews})",
                         style: GoogleFonts.poppins(fontSize: 10, color: Colors.grey),
                       ),
                     ],
@@ -101,9 +101,9 @@ class ActivityCardHorizontal extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          if (activity.price_discount > 0)
+                          if (activity.priceDiscount > 0)
                             Text(
-                              (activity.price + activity.price_discount).toRupiah(),
+                              (activity.price + activity.priceDiscount).toRupiah(),
                               style: GoogleFonts.poppins(
                                 fontSize: 10,
                                 color: Colors.grey,

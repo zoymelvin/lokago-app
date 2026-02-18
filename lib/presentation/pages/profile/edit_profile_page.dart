@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../data/models/user_model.dart';
-import '../blocs/user_bloc/user_bloc.dart';
-import '../blocs/user_bloc/user_event.dart';
-import '../blocs/user_bloc/user_state.dart';
-import '../widgets/custom_text_field.dart';
+import '../../../data/models/user_model.dart';
+import '../../blocs/user_bloc/user_bloc.dart';
+import '../../blocs/user_bloc/user_event.dart';
+import '../../blocs/user_bloc/user_state.dart';
+import '../../widgets/custom_text_field.dart';
 
 class EditProfilePage extends StatefulWidget {
   final UserModel user;

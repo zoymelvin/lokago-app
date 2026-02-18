@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lokago/presentation/pages/main_screen.dart';
 import 'package:lokago/presentation/widgets/custom_button.dart';
 import 'package:lokago/presentation/widgets/custom_text_field.dart';
-import '../blocs/auth_bloc/auth_bloc.dart';
-import '../blocs/auth_bloc/auth_event.dart';
-import '../blocs/auth_bloc/auth_state.dart';
+import '../../blocs/auth_bloc/auth_bloc.dart';
+import '../../blocs/auth_bloc/auth_event.dart';
+import '../../blocs/auth_bloc/auth_state.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatelessWidget {
