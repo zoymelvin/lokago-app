@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lokago/presentation/pages/cart/cart_page.dart';
+import 'package:lokago/presentation/pages/order/order_list_page.dart';
 import 'package:lokago/presentation/pages/profile/account_page.dart';
 import 'home/home_page.dart';
 import '../widgets/navigation/custom_bottom_bar.dart';
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const Center(child: Text("Pesanan")),
+    const OrderListPage(),
     const CartPage(),
     const AccountPage(),
   ];

@@ -53,11 +53,7 @@ class _ActivityDetailInfoState extends State<ActivityDetailInfo> {
                     )
                   ],
                 ),
-                child: Icon(
-                  isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
-                  color: isBookmarked ? Colors.white : Colors.grey[700],
-                  size: 20,
-                ),
+                
               ),
             ),
           ],
