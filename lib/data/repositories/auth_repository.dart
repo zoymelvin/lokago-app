@@ -1,9 +1,8 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:lokago/data/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/constants/api_constants.dart';
+import '../../core/utils/shared_prefs_util.dart';
 
 class AuthRepository {
   final Dio _dio;
@@ -27,10 +26,22 @@ class AuthRepository {
   }
 
   Future<Response> login(String email, String password) async {
-    return await _dio.post(ApiConstants.login, data: {
-      "email": email,
-      "password": password,
-    });
+    try {
+      final response = await _dio.post(ApiConstants.login, data: {
+        "email": email,
+        "password": password,
+      });
+
+      if (response.statusCode == 200) {
+        final String? token = response.data['token']; 
+        if (token != null) {
+          await SharedPrefsUtil.saveToken(token);
+        }
+      }
+      return response;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<UserModel> getLoggedUser() async {
@@ -43,27 +54,27 @@ class AuthRepository {
   }
 
   Future<void> updateProfile({
-  required String name,
-  required String email,
-  required String phoneNumber,
-  required String profilePictureUrl,
-}) async {
-  try {
-    await _dio.post(
-      ApiConstants.updateProfile, // Pastikan ini ada di api_constants.dart
-      data: {
-        "name": name,
-        "email": email,
-        "phoneNumber": phoneNumber,
-        "profilePictureUrl": profilePictureUrl,
-      },
-    );
-  } catch (e) {
-    rethrow;
+    required String name,
+    required String email,
+    required String phoneNumber,
+    required String profilePictureUrl,
+  }) async {
+    try {
+      await _dio.post(
+        ApiConstants.updateProfile,
+        data: {
+          "name": name,
+          "email": email,
+          "phoneNumber": phoneNumber,
+          "profilePictureUrl": profilePictureUrl,
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
-}
 
-Future<String> uploadImage(File imageFile) async {
+  Future<String> uploadImage(File imageFile) async {
     try {
       String fileName = imageFile.path.split('/').last;
       FormData formData = FormData.fromMap({
@@ -71,33 +82,32 @@ Future<String> uploadImage(File imageFile) async {
       });
 
       final response = await _dio.post(ApiConstants.uploadImage, data: formData);
-      return response.data['url']; // Mengambil URL hasil upload
+      return response.data['url'];
     } catch (e) {
       rethrow;
     }
   }
 
-Future<void> updatePassword({
-  required String oldPassword,
-  required String newPassword,
-  required String confirmNewPassword,
-}) async {
-  try {
-    await _dio.post(
-      ApiConstants.updatePassword, // Pastikan 'update-password' sudah ada di ApiConstants
-      data: {
-        "oldPassword": oldPassword,
-        "newPassword": newPassword,
-        "confirmNewPassword": confirmNewPassword,
-      },
-    );
-  } catch (e) {
-    rethrow;
+  Future<void> updatePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    try {
+      await _dio.post(
+        ApiConstants.updatePassword,
+        data: {
+          "oldPassword": oldPassword,
+          "newPassword": newPassword,
+          "confirmNewPassword": confirmNewPassword,
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
-}
 
   Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
+    await SharedPrefsUtil.clearToken();
   }
 }
