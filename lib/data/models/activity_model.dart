@@ -5,14 +5,14 @@ class ActivityModel {
   final String description;
   final List<String> imageUrls;
   final int price;
-  final int priceDiscount; // Diubah ke camelCase
+  final int priceDiscount;
   final double rating;
-  final int totalReviews; // Diubah ke camelCase
+  final int totalReviews;
   final String facilities;
   final String address;
   final String province;
   final String city;
-  final String locationMaps; // Diubah ke camelCase
+  final String locationMaps;
 
   ActivityModel({
     required this.id,
@@ -32,36 +32,54 @@ class ActivityModel {
   });
 
   factory ActivityModel.fromJson(Map<String, dynamic> json) {
+    int toInt(dynamic value) {
+      if (value == null) return 0;
+      if (value is int) return value;
+      if (value is double) return value.toInt();
+      if (value is String) return int.tryParse(value) ?? 0;
+      return 0;
+    }
+
+    double toDouble(dynamic value) {
+      if (value == null) return 0.0;
+      if (value is double) return value;
+      if (value is int) return value.toDouble();
+      if (value is String) return double.tryParse(value) ?? 0.0;
+      return 0.0;
+    }
+
+    List<String> toStringList(dynamic value) {
+      if (value != null && value is List) {
+        return value.map((e) => e.toString()).toList();
+      }
+      return [];
+    }
+
     return ActivityModel(
-      id: json['id'] ?? '',
-      categoryId: json['categoryId'] ?? '',
-      title: json['title'] ?? 'No Title',
-      description: json['description'] ?? '',
-      // Mapping List String agar aman jika null
-      imageUrls: (json['imageUrls'] as List<dynamic>?)
-              ?.map((e) => e.toString())
-              .toList() ?? [],
-      price: json['price'] ?? 0,
-      // Mapping snake_case dari API ke camelCase di Model
-      priceDiscount: json['price_discount'] ?? 0,
-      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-      totalReviews: json['total_reviews'] ?? 0,
-      facilities: json['facilities'] ?? '',
-      address: json['address'] ?? '',
-      province: json['province'] ?? '',
-      city: json['city'] ?? '',
-      locationMaps: json['location_maps'] ?? '',
+      id: json['id']?.toString() ?? '',
+      categoryId: (json['categoryId'] ?? json['category_id'])?.toString() ?? '',
+      title: json['title']?.toString() ?? 'No Title',
+      description: json['description']?.toString() ?? '',
+      imageUrls: toStringList(json['image_urls'] ?? json['imageUrls']),
+      price: toInt(json['price']),
+      priceDiscount: toInt(json['price_discount'] ?? json['priceDiscount']),
+      rating: toDouble(json['rating']),
+      totalReviews: toInt(json['total_reviews'] ?? json['totalReviews']),
+      facilities: json['facilities']?.toString() ?? '',
+      address: json['address']?.toString() ?? '',
+      province: json['province']?.toString() ?? '',
+      city: json['city']?.toString() ?? '',
+      locationMaps: (json['location_maps'] ?? json['locationMaps'])?.toString() ?? '',
     );
   }
 
-  // Tambahkan juga Method toJson (Berguna untuk Local Storage/Bookmark nanti)
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'categoryId': categoryId,
       'title': title,
       'description': description,
-      'imageUrls': imageUrls,
+      'image_urls': imageUrls,
       'price': price,
       'price_discount': priceDiscount,
       'rating': rating,

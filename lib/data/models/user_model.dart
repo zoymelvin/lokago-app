@@ -15,7 +15,6 @@ class UserModel {
     this.phoneNumber,
   });
 
-  // Untuk mengubah data dari API (JSON) menjadi objek Flutter
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
@@ -27,8 +26,6 @@ class UserModel {
     );
   }
 
-  // TAMBAHKAN INI: Untuk mengubah objek Flutter menjadi JSON 
-  // (Sangat berguna untuk fitur Update Profil nanti)
   Map<String, dynamic> toJson() {
     return {
       'id': id,
