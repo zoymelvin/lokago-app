@@ -9,7 +9,6 @@ class PaymentRepository {
 
   Future<Options> _getOptions() async {
     final String? token = await SharedPrefsUtil.getToken();
-    print("DEBUG: Using Token -> $token");
     return Options(
       headers: {
         'apiKey': ApiConstants.apiKey,
@@ -22,49 +21,84 @@ class PaymentRepository {
     try {
       final options = await _getOptions();
       final response = await _dio.get(
-        '${ApiConstants.baseUrl}/payment-methods', 
+        '${ApiConstants.baseUrl}/payment-methods',
         options: options,
       );
 
-      print("DEBUG: Response Payment Methods -> ${response.data}");
-
-      if (response.data['data'] != null) {
+      if (response.data != null && response.data['data'] != null) {
         final List data = response.data['data'];
         return data.map((json) => PaymentMethodModel.fromJson(json)).toList();
       }
       return [];
     } on DioException catch (e) {
-      print("DEBUG: Error Get Payment Methods -> ${e.response?.data}");
-      throw Exception(e.response?.data['message'] ?? 'Gagal memuat bank');
+      print("EROR FETCH BANK: ${e.response?.data}");
+      throw Exception(e.response?.data['message'] ?? 'Gagal memuat metode pembayaran');
     }
   }
 
+
+Future<List<TransactionModel>> getTransactionHistory() async {
+    try {
+      final options = await _getOptions();
+      final response = await _dio.get(
+        '${ApiConstants.baseUrl}/my-transactions', 
+        options: options,
+      );
+
+      print("DEBUG ALL TRANSACTIONS RESPONSE: ${response.data}");
+
+      if (response.data != null) {
+        final dynamic rawData = response.data['data'] ?? response.data;
+        
+        if (rawData is List) {
+          return rawData.map((json) => TransactionModel.fromJson(json)).toList();
+        }
+      }
+      return [];
+    } on DioException catch (e) {
+      print("DIO ERROR HISTORY: ${e.response?.data}");
+      throw Exception(e.response?.data['message'] ?? 'Gagal memuat riwayat');
+    } catch (e) {
+      print("GENERAL ERROR HISTORY: $e");
+      throw Exception('Kesalahan saat memproses data transaksi');
+    }
+  }
   Future<TransactionModel> createTransaction({
     required String cartId,
     required String paymentMethodId,
   }) async {
     try {
       final options = await _getOptions();
-      print("DEBUG: Posting Transaction -> cartId: $cartId, method: $paymentMethodId");
+      
+      print("DEBUG SENDING: cartIds: [$cartId], paymentMethodId: $paymentMethodId");
 
       final response = await _dio.post(
-        '${ApiConstants.baseUrl}/generate-payment-methods', 
+        '${ApiConstants.baseUrl}/create-transaction',
         data: {
-          'cartId': cartId,
+          'cartIds': [cartId], 
           'paymentMethodId': paymentMethodId,
         },
         options: options,
       );
 
-      print("DEBUG: Response Generate Transaction -> ${response.data}");
-
-      if (response.data['data'] != null) {
-        return TransactionModel.fromJson(response.data['data']);
+      if (response.data['code'] == 200 || response.data['status'] == 'OK') {
+        if (response.data['data'] != null) {
+          return TransactionModel.fromJson(response.data['data']);
+        } else {
+         return TransactionModel(
+  id: cartId,
+  invoiceId: "INV-${DateTime.now().millisecondsSinceEpoch}",
+  status: "PENDING",
+  totalAmount: 0,
+  paymentInstruction: "Pesanan berhasil dibuat. Silakan cek riwayat.",
+  transactionItems: const [],
+);
+        }
       }
-      throw Exception('Data transaksi kosong');
+      throw Exception('Gagal memproses transaksi');
     } on DioException catch (e) {
-      print("DEBUG: Error Create Transaction -> ${e.response?.data}");
-      throw Exception(e.response?.data['message'] ?? 'Pembayaran gagal');
+      print("EROR DETAIL DARI SERVER: ${e.response?.data}");
+      throw Exception(e.response?.data['message'] ?? 'Proses pembayaran gagal');
     }
   }
 }

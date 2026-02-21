@@ -121,7 +121,6 @@ class _HomePageState extends State<HomePage> {
           Text("LokaGo", style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: const Color(0xFF0052CC))),
           Row(
             children: [
-              _buildNotificationIcon(),
               const SizedBox(width: 12),
               BlocBuilder<UserBloc, UserState>(
                 builder: (context, state) {
@@ -146,15 +145,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildNotificationIcon() {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
-      ),
-      child: const Icon(Icons.notifications_none_rounded, color: Colors.black87, size: 24),
-    );
-  }
+  
 }

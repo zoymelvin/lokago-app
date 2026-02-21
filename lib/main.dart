@@ -16,7 +16,6 @@ import 'presentation/blocs/home_bloc/home_bloc.dart';
 import 'presentation/blocs/home_bloc/home_event.dart';
 
 void main() {
-  // Pastikan inisialisasi binding agar SharedPreferences aman
   WidgetsFlutterBinding.ensureInitialized();
   
   final dioClient = DioClient();
@@ -38,6 +37,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (context) => HomeRepository(dio)),
         RepositoryProvider(create: (context) => CartRepository()), 
         RepositoryProvider(create: (context) => PaymentRepository()),
+        RepositoryProvider(create: (context) => PaymentRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -52,6 +52,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => CartBloc(context.read<CartRepository>())..add(FetchCartItems()),
+          ),
+          BlocProvider(
+            create: (context) => PaymentBloc(context.read<PaymentRepository>()),
           ),
           BlocProvider(
             create: (context) => PaymentBloc(context.read<PaymentRepository>()),

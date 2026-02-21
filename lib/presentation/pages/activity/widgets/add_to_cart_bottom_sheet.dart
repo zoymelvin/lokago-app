@@ -16,7 +16,7 @@ class AddToCartBottomSheet extends StatefulWidget {
 
 class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
   int quantity = 1;
-  bool isSubmitting = false; // State untuk mencegah double klik
+  bool isSubmitting = false;
 
   @override
   Widget build(BuildContext context) {
@@ -113,15 +113,13 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
                 onPressed: isSubmitting ? null : () async {
                   setState(() => isSubmitting = true);
 
-                  // FIX LOGIKA API: Looping panggil AddToCart sebanyak quantity pilihan
                   for (int i = 0; i < quantity; i++) {
                     context.read<CartBloc>().add(
                       AddToCart(
                         activityId: widget.activity.id,
-                        quantity: 1, // Kita kirim 1, tapi diulang sebanyak 'quantity' kali
+                        quantity: 1,
                       ),
                     );
-                    // Beri jeda tipis agar server tidak error karena request terlalu cepat
                     await Future.delayed(const Duration(milliseconds: 200));
                   }
 

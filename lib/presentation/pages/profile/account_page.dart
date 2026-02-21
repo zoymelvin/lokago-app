@@ -147,12 +147,6 @@ class AccountPage extends StatelessWidget {
                         },
                       ),
                       AccountMenuItem(
-                        icon: Icons.favorite_border_rounded,
-                        title: "Favorit",
-                        subtitle: "Daftar destinasi wisata yang Anda simpan",
-                        onTap: () {},
-                      ),
-                      AccountMenuItem(
                         icon: Icons.person_outline_rounded,
                         title: "Edit Profil",
                         subtitle: "Kelola informasi data diri dan kontak",

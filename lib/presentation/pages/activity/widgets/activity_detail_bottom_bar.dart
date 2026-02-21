@@ -8,7 +8,13 @@ import '../../../blocs/cart_bloc/cart_state.dart';
 
 class ActivityDetailBottomBar extends StatelessWidget {
   final ActivityModel activity;
-  const ActivityDetailBottomBar({super.key, required this.activity});
+  final VoidCallback onBookNowPressed;
+
+  const ActivityDetailBottomBar({
+    super.key, 
+    required this.activity, 
+    required this.onBookNowPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +64,6 @@ class ActivityDetailBottomBar extends StatelessWidget {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                // PERBAIKAN: Menggunakan withValues agar tidak deprecated
                 color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, -2),
@@ -72,8 +77,6 @@ class ActivityDetailBottomBar extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () {
-                      // SEBELUM: context.read<CartBloc>().add(AddToCart(activity.id));
-                      // SEKARANG: Munculkan Bottom Sheet untuk memilih Quantity
                       showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
@@ -94,9 +97,7 @@ class ActivityDetailBottomBar extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Implement direct booking/checkout logic
-                    },
+                    onPressed: onBookNowPressed, // Panggil fungsi yang dikirim dari parent
                     style: ElevatedButton.styleFrom(
                       backgroundColor: bluePrimary,
                       foregroundColor: Colors.white,
